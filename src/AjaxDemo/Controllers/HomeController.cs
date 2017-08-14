@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AjaxDemo.Models;
 
@@ -9,6 +7,16 @@ namespace AjaxDemo.Controllers
 {
     public class HomeController : Controller
     {
+        //Returns a number of random destinations
+        private AjaxDemoContext db = new AjaxDemoContext();
+        public IActionResult RandomDestinationList(int destinationCount)
+        {
+            //Guid assures that destinations are returned in a random order
+            //Take says how many destinations to put in randomDestinationList
+            var randomDestinationList = db.Destinations.OrderBy(r => Guid.NewGuid()).Take(destinationCount);
+            return Json(randomDestinationList);
+        }
+
         //Basic AJAX request
         public IActionResult HelloAjax()
         {
