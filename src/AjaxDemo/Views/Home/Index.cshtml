@@ -60,7 +60,7 @@
              });
          });
 
-         @*Input a number, and that number of randomly-selected destinations*@
+         @*GET request using AJAX*@
          $('.display-random-database-items').submit(function (event) {
              event.preventDefault();
              console.log($(this).serialize());
@@ -76,6 +76,21 @@
                      }
                      stringResult += '</ul>';
                      $('#result5').html(stringResult);
+                 }
+             });
+         });
+
+         //POST request using AJAX
+         $('.new-destination').submit(function (event) {
+             event.preventDefault();
+             $.ajax({
+                 url: '@Url.Action("NewDestination")',
+                 type: 'POST',
+                 dataType: 'json',
+                 data: $(this).serialize(),
+                 success: function (result) {
+                     var resultMessage = 'You\'ve added a new destination to the database!<br>Id: ' + result.id + '<br>City: ' + result.city + '<br>Country: ' + result.country;
+                     $('#result6').html(resultMessage);
                  }
              });
          });
@@ -111,7 +126,7 @@
     <h4 class="display-view">Display view</h4>
     <div id="result4"></div>
 
-    @*Input a number, and that number of randomly-selected destinations*@
+    @*GET request using AJAX*@
     <h2>Using a form to make a GET request</h2>
     <form action="RandomDestinationList" class="display-random-database-items">
         <label for="destinationCount">How many destinations would you like to see?</label>
@@ -119,6 +134,17 @@
         <button type="submit">Submit</button>
     </form>
     <div id="result5"></div>
+
+    @*POST request using AJAX*@
+    <h2>Submitting data with a POST request</h2>
+    <form action="NewDestination" class="new-destination">
+        <label for="newCity">City: </label>
+        <input type="text" name="newCity" />
+        <label for="newCountry">Country: </label>
+        <input type="text" name="newCountry" />
+        <button type="submit">Submit</button>
+    </form>
+    <div id="result6"></div>
 
 </body>
 </html>

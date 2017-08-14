@@ -7,7 +7,7 @@ namespace AjaxDemo.Controllers
 {
     public class HomeController : Controller
     {
-        //Returns a number of random destinations
+        //GET request using AJAX
         private AjaxDemoContext db = new AjaxDemoContext();
         public IActionResult RandomDestinationList(int destinationCount)
         {
@@ -16,6 +16,17 @@ namespace AjaxDemo.Controllers
             var randomDestinationList = db.Destinations.OrderBy(r => Guid.NewGuid()).Take(destinationCount);
             return Json(randomDestinationList);
         }
+        
+        //HttpPostAttribute requst using AJAX
+        [HttpPost]
+        public IActionResult NewDestination(string newCity, string newCountry)
+        {
+            Destination newDestination = new Destination(newCity, newCountry);
+            db.Destinations.Add(newDestination);
+            db.SaveChanges();
+            return Json(newDestination);
+        }
+
 
         //Basic AJAX request
         public IActionResult HelloAjax()
