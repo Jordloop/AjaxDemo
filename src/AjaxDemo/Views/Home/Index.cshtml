@@ -5,10 +5,10 @@
     @*Link to JQuery*@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
-    @*AJAX request*@
     <script type="text/javascript">
      $(document).ready(function () {
          $('.hello-ajax').click(function () {
+         @*Basic AJAX request*@
             $.ajax({
                 type: 'GET',
                 //Where we are sending the request to
@@ -19,16 +19,77 @@
                     $('#result1').html(result);
                 }
             });
-        });
-    });
+         });
+//----------------------------------------------------
+         $('.sum').click(function () {
+         @*AJAX request using parameters*@
+             $.ajax({
+                 type: 'GET',
+                 //Parameters
+                 data: { firstNumber: 1, secondNumber: 2 },
+                 url: '@Url.Action("Sum")',
+                 success: function (result) {
+                     $('#result2').html(result);
+                 }
+             });
+         });
+//----------------------------------------------------
+         $('.display-object').click(function () {
+             $.ajax({
+                 type: 'GET',
+                 //Type of data we expect from the server
+                 dataType: 'json',
+                 //Type of data  we are sending to the server
+                 contentType: 'application/json',
+                 url: '@Url.Action("DisplayObject")',
+                 success: function (result) {
+                     var resultString = 'Id: ' + result.id + '<br>City: ' + result.city + '<br>Country: ' + result.country;
+                     $('#result3').html(resultString);
+                 }
+             });
+         });
+//----------------------------------------------------
+         $('.display-view').click(function () {
+             $.ajax({
+                 type: 'GET',
+                 dataType: 'html',
+                 url: '@Url.Action("DisplayViewWithAjax")',
+                 success: function (result) {
+                     $('#result4').html(result);
+                 }
+             });
+         });
+
+     });//doc ready
     </script>
+
+
 
 </head>
 <body>
+
     <h2>Basic AJAX</h2>
     @*AJAX-enabled DOM elemetn*@
     <h4 class="hello-ajax">Hello AJAX</h4>
     @*AJAX wrapper/container*@
     <div id="result1"></div>
+
+    <hr/>
+    
+    @*AJAX request using parametersr*@
+    <h2>Using Parameters</h2>
+    <h4 class="sum">Sum</h4>
+    <div id="result2"></div>
+
+    @*AJAX request to display object from the server*@
+    <h2>Using JSON to display an object</h2>
+    <h4 class="display-object">Display object</h4>
+    <div id="result3"></div>
+
+    @*AJAX request to display a view*@
+    <h2>Displaying a view</h2>
+    <h4 class="display-view">Display view</h4>
+    <div id="result4"></div>
+
 </body>
 </html>
