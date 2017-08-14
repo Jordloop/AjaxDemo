@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>AJAX Demo</title>
+    @*Link to JQuery*@
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+    @*AJAX request*@
+    <script type="text/javascript">
+     $(document).ready(function () {
+         $('.hello-ajax').click(function () {
+            $.ajax({
+                type: 'GET',
+                //Where we are sending the request to
+                url: '@Url.Action("HelloAjax")',
+                //Called if request is sucessful. "result" is whatever is returned from the request.
+                success: function (result) {
+                //replaces the content of id "result1" with whatever result is.
+                    $('#result1').html(result);
+                }
+            });
+        });
+    });
+    </script>
+
+</head>
+<body>
+    <h2>Basic AJAX</h2>
+    @*AJAX-enabled DOM elemetn*@
+    <h4 class="hello-ajax">Hello AJAX</h4>
+    @*AJAX wrapper/container*@
+    <div id="result1"></div>
+</body>
+</html>
